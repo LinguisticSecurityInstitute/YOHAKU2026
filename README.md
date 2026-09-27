@@ -85,31 +85,3 @@ AI was not used to fabricate sources or community positions, reconstruct
 restricted or unshared Indigenous knowledge, imitate or speak for an Indigenous
 person or community, or upload Indigenous knowledge to AI systems without
 explicit authority and consent.
-
----
-
-## Appendix · Deploy to GitHub Pages (5 minutes)
-
-```bash
-cd seven-generations-orbit
-git init && git add . && git commit -m "Seven Generations in Orbit"
-git branch -M main
-git remote add origin git@github.com:<you>/seven-generations-orbit.git
-git push -u origin main
-```
-
-Then: repo **Settings → Pages → Source: Deploy from a branch → main / root**.
-Live at `https://<you>.github.io/seven-generations-orbit/`.
-
-## Appendix · 2-minute video outline (required for submission)
-
-1. **0:00–0:20** — The problem: thousands of derelict objects; deciding where
-   to act first is a decision about obligations, not just engineering.
-2. **0:20–0:50** — Screen-record: six objects, the relationship map, the seven
-   questions with their obligations.
-3. **0:50–1:20** — The ledger: every rank explains itself; fragile verdicts are
-   marked; owed-but-unreachable objects are carried forward.
-4. **1:20–1:45** — The two moments: move the horizon slider (the order changes
-   across seven generations), then answer Question 7 with "standing not
-   established" — the tool refuses and asks you to convene.
-5. **1:45–2:00** — The closing NARETU question, spoken over the sky.
