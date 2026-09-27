@@ -3,7 +3,7 @@
 **A Framework for Responsible Debris Prioritization** — with a companion interactive prototype.
 
 Built for **YOHAKU Challenge 2: Seven Generations in Orbit**, led by James Rattling
-Leaf Sr. and Phil Two Eagle (GEO Indigenous Alliance, Peta Omniciye, Inc. ×
+Leaf Sr., Phil Two Eagle & Diana Mastracci (GEO Indigenous Alliance, Peta Omniciye, Inc. ×
 Space4Innovation). Author: Sahara Al-Madi, Linguistic Security Institute.
 
 ## What this is
