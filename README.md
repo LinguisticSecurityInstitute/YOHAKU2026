@@ -69,12 +69,7 @@ scores and decay estimates are deliberation starters, not measurements.
 Per the YOHAKU booklet's four points:
 
 - **Tools used:** Kimi (Moonshot AI) , Deepseek
-- **What for:** organizing this repository (folders, files, documentation
-  structure); editing and structuring the framework document; scaffolding the
-  prototype's user interface; testing the demo.
-- **Independently checked:** all dataset facts against the Challenge 2
-  materials (McKnight et al., 2021; ESA Space Environment Report); all
-  references to Lakota principles and NARETU against the Participant Booklet.
+- **What for:** To support the implementation of the author’s ideas, including developing the user interface, creating and coding the demo, organizing the repository, and editing and structuring the framework document. The framework’s core ideas, principles, and decision-making approach were developed by the author. Dataset facts were independently verified against the Challenge 2 materials, which draw on McKnight et al. (2021) and the ESA Space Environment Report 2026. References to Lakota principles and NARETU were verified against the Participant Booklet. The author remains responsible for the framework, its interpretations, data verification, and the prototype’s outputs.
 - **Did AI contribute directly to the solution or decision-making system?**
   No. The framework's ideas — the seven questions, the principle mappings, the
   constraint-based treatment of authority, the decision to end in deliberation
