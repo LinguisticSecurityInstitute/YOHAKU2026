@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Seven Generations in Orbit — a decision tool that answers to the future</title>
+<meta name="description" content="A Lakota-informed decision-support prototype for prioritizing space debris responsibility. YOHAKU Responsible AI for Space Debris Hackathon, Challenge 2." />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='13' fill='%232F3D29'/%3E%3Ccircle cx='22' cy='9' r='2.5' fill='%23D9A441'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300&family=Public+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+<noscript><link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300&family=Public+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet" /></noscript>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- The sky renders behind everything -->
+<canvas id="sky" aria-hidden="true"></canvas>
+<div class="grain" aria-hidden="true"></div>
+
+<main id="app">
+
+  <!-- ============ SCREEN 1 · OPENING ============ -->
+  <section class="screen is-active" id="screen-opening" aria-labelledby="opening-title">
+    <div class="stage stage--center">
+      <p class="kicker">YOHAKU · Challenge 2 · Seven Generations in Orbit</p>
+      <h1 id="opening-title" class="display">
+        Which debris should we<br />take <em>responsibility</em> for first?
+      </h1>
+      <p class="lede">
+        Six real objects circle above us, drawn from the dataset this challenge
+        provides. This demo walks through a suggested framework for deciding
+        which of them humanity should take responsibility for first: it asks
+        seven questions — grounded in <strong>Mitákuye Oyás'iŋ</strong>,
+        <strong>Škaŋ</strong>, our relationship with the stars, and a duty to
+        the <strong>seventh generation</strong> — then shows what your answers
+        would mean. It is a starting point for deliberation, offered openly —
+        a framework meant to be questioned, adapted and improved over time.
+      </p>
+      <button class="btn" id="btn-begin" type="button">Begin</button>
+    </div>
+  </section>
+
+  <!-- ============ SCREEN 2 · THE SIX OBJECTS ============ -->
+  <section class="screen" id="screen-objects" aria-labelledby="objects-title">
+    <div class="stage stage--split">
+      <div class="pane pane--left">
+        <p class="kicker">The starting dataset</p>
+        <h2 id="objects-title" class="headline">Six objects,<br />six relationships</h2>
+        <p class="lede lede--small">
+          Drawn from a composite ranking that pooled eleven independent risk models
+          (McKnight et al., 2021), cross-checked against ESA's Space Environment
+          Report. Select an object to see what it is connected to.
+        </p>
+        <div class="object-detail" id="object-detail" aria-live="polite">
+          <p class="object-detail__empty">Select an object from the list to see what it is connected to.</p>
+        </div>
+      </div>
+      <div class="pane pane--right">
+        <ol class="object-list" id="object-list"></ol>
+        <div class="stage-actions">
+          <button class="btn" id="btn-to-questions" type="button">Answer the seven questions</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SCREEN 3 · SEVEN QUESTIONS ============ -->
+  <section class="screen" id="screen-questions" aria-labelledby="question-text">
+    <div class="stage stage--center stage--narrow">
+      <div class="q-progress">
+        <span class="q-progress__count" id="q-count">1 / 7</span>
+        <div class="q-progress__track"><div class="q-progress__fill" id="q-fill"></div></div>
+      </div>
+      <p class="q-principle" id="q-principle"></p>
+      <p class="q-owed" id="q-owed"></p>
+      <h2 class="q-text" id="question-text"></h2>
+      <p class="q-why" id="q-why"></p>
+      <div class="q-options" id="q-options" role="group" aria-label="Answer options"></div>
+    </div>
+  </section>
+
+  <!-- ============ SCREEN 4 · COMPARISON ============ -->
+  <section class="screen" id="screen-comparison" aria-labelledby="comparison-title">
+    <div class="stage stage--wide">
+
+      <header class="compare-head">
+        <p class="kicker">The decision, made visible</p>
+        <h2 id="comparison-title" class="headline">A ranking that answers back</h2>
+        <p class="lede lede--small">
+          This order is not a verdict. Move the horizon, change the weighting,
+          or revisit an answer — and watch it change its mind in the open.
+        </p>
+      </header>
+
+      <div class="notice convene" id="convene-panel" hidden>
+        <p class="notice__title">Convene the affected parties.</p>
+        <p>
+          Your answer to Question 7 says standing to decide has not been established.
+          This tool treats authority as a limit, not a weight — so it refuses to
+          produce a ranking. No score, no recommendation, no workaround.
+          Bring operators, affected parties and knowledge holders into one room first.
+          Then return, and the decision can begin.
+        </p>
+        <button class="btn btn--ghost" id="btn-convene-revisit" type="button">Return to Question 7</button>
+      </div>
+
+      <div class="controls">
+        <div class="control control--slider">
+          <label for="time-slider" class="control__label">Horizon</label>
+          <input type="range" id="time-slider" min="0" max="7" step="1" value="0"
+                 aria-valuetext="Today" list="gen-ticks" />
+          <datalist id="gen-ticks">
+            <option value="0" label="Today"></option><option value="1" label="1"></option>
+            <option value="2" label="2"></option><option value="3" label="3"></option>
+            <option value="4" label="4"></option><option value="5" label="5"></option>
+            <option value="6" label="6"></option><option value="7" label="7"></option>
+          </datalist>
+          <div class="control__scale"><span>Today</span><span id="gen-label">Seven generations from now</span></div>
+        </div>
+        <div class="control control--toggle">
+          <span class="control__label" id="weighting-label">Weighting</span>
+          <div class="seg" role="group" aria-labelledby="weighting-label">
+            <button class="seg__btn is-on" id="w-equal" type="button">Equal</button>
+            <button class="seg__btn" id="w-obligation" type="button">Obligation-weighted</button>
+          </div>
+          <p class="control__note">Obligation weighting gives more voice to time horizon, relationships and authority — the three questions closest to the named principles.</p>
+        </div>
+      </div>
+
+      <div id="ranking-wrap">
+        <ol class="ranking" id="ranking" aria-live="polite"></ol>
+      </div>
+
+      <div class="sbs" id="side-by-side">
+        <p class="sbs__title">One decision, two horizons</p>
+        <p class="sbs__note">The same answers, applied to today and to the seventh generation. The shift between them is part of the decision.</p>
+        <div class="sbs__grid">
+          <div class="sbs__col">
+            <p class="sbs__head">Today</p>
+            <ol class="mini-ranking" id="sbs-today"></ol>
+          </div>
+          <div class="sbs__col">
+            <p class="sbs__head">Seven generations from now</p>
+            <ol class="mini-ranking" id="sbs-future"></ol>
+          </div>
+        </div>
+        <div class="sbs__shift" id="sbs-shift"></div>
+      </div>
+
+      <div class="limits">
+        <p class="limits__title">What this tool cannot decide</p>
+        <ul class="limits__list">
+          <li>Whether Lakota principles can be converted into numbers. They shaped the design; they are not variables in it.</li>
+          <li>Whether an intervention is lawful. That belongs to operators, treaties and the communities affected.</li>
+          <li>Whether the data is complete. Six objects stand in for thousands; every dimension score is a deliberation starter, not a measurement.</li>
+          <li>Whether acting is wise. It can only make the consequences of acting — and of waiting — visible.</li>
+          <li>It cannot yet hear the communities who will live with this decision — the multilingual, multicultural, multinational public under a shared sky. That is the work of the expanded framework.</li>
+        </ul>
+        <p class="limits__hand">The tool ends where human deliberation begins. Its output is a conversation to have, not a decision made.</p>
+      </div>
+
+      <div class="compare-foot">
+        <button class="btn btn--ghost" id="btn-revisit" type="button">Revisit the questions</button>
+        <p class="naretu">
+          If a decision protects orbit today but leaves a worse environment to
+          those who come after — <em>was it a responsible decision?</em>
+        </p>
+        <p class="honesty">
+          This tool does not translate Lakota knowledge into an algorithm. The principles named here —
+          Mitákuye Oyás'iŋ, Škaŋ, relationship with the stars, Seven Generations — were shared in the
+          Challenge 2 materials as starting points for co-design; they shaped what the tool asks and what
+          it refuses to ignore. Lakota knowledge holders retain authority over how these principles are
+          represented, expressed and used. The framework is documented in
+          <em>Seven Generations in Orbit: A Framework for Responsible Debris Prioritization</em>
+          (S. Al-Madi, Linguistic Security Institute, 2026), included in this repository.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<!-- Colophon: purpose, author, and where this belongs — one merged statement -->
+<footer class="site-footer">
+  <div class="site-footer__inner">
+
+    <p class="colophon__lead">
+      An instrument for <em>deliberation</em> — not a final judgement.
+    </p>
+    <p class="colophon__text">
+      It opens the conversation about which pieces of debris humanity should take
+      responsibility for first. It does not close it. Every ranking it shows is a
+      starting point for the people who must decide together.
+    </p>
+
+    <p class="colophon__rule" aria-hidden="true"></p>
+
+    <p class="colophon__attrib">
+      Created by <span class="colophon__name">Sahara Al-Madi</span>
+      <span class="colophon__org">· Linguistic Security Institute (LSI)</span>
+    </p>
+
+    <dl class="colophon__grid">
+      <div class="colophon__row">
+        <dt>Submitted to</dt>
+        <dd>YOHAKU — Responsible AI for Space Debris Hackathon</dd>
+      </div>
+      <div class="colophon__row">
+        <dt>Challenge</dt>
+        <dd>Challenge 2 · Seven Generations in Orbit</dd>
+      </div>
+      <div class="colophon__row">
+        <dt>Led by</dt>
+        <dd>James Rattling Leaf Sr., Diana Mastracci &amp; Phil Two Eagle</dd>
+      </div>
+      <div class="colophon__row">
+        <dt>Partners</dt>
+        <dd>GEO Indigenous Alliance, Peta Omniciye, Inc. &amp; Space4Innovation</dd>
+      </div>
+      <div class="colophon__row">
+        <dt>Date</dt>
+        <dd>September 2026</dd>
+      </div>
+    </dl>
+
+  </div>
+</footer>
+
+<script src="js/data.js"></script>
+<script src="js/questions.js"></script>
+<script src="js/scoring.js"></script>
+<script src="js/sky.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
