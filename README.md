@@ -68,7 +68,7 @@ scores and decay estimates are deliberation starters, not measurements.
 
 Per the YOHAKU booklet's four points:
 
-- **Tool used:** Kimi (Moonshot AI).
+- **Tools used:** Kimi (Moonshot AI) , Deepseek
 - **What for:** organizing this repository (folders, files, documentation
   structure); editing and structuring the framework document; scaffolding the
   prototype's user interface; testing the demo.
